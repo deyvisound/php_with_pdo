@@ -6,16 +6,35 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="ISO-8859-9">
+        <meta charset="UTF-8">
         <title></title>
     </head>
     <body>
         <?php
             require 'Conexao.php';
             
-            $con = new Conexao();
+            $con = new Conexao();                        
             
-            var_dump($con);
+            $opcao = $_REQUEST["opcao"];
+            
+            switch ($opcao) {
+                case 1:
+                    $testeInsert = "INSERT INTO `produtos`(`id`, `tipo`, `fabricante`, `modelo`, `preco`, `descricao`, `quantidade`) "
+                    . "VALUES (null,'matéria prima', 'LBA Ltda.' , 'Aço Inox', '20.00', '20 reais por kg','300')";
+                    $con->insert_sql($testeInsert);                    
+                    break;
+                case 2:
+                    $testeSelect = "SELECT * FROM produtos;";
+                    $array = $con->exec_fetch($testeSelect);
+                    
+                    foreach ($array as $value) {
+                        var_dump($value);
+                    }
+                    
+                default:
+                    print "Não faça Nada!";
+                    break;
+            }            
         ?>
     </body>
 </html>
